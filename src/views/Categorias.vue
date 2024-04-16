@@ -5,7 +5,7 @@
     <div class="container">
         <button type="button" class="btn btn-outline-info" @click="this.editarCategoria()">Añadir Categoria</button>
         <br>
-        <table class="table table-striped" v-for="category in categories.data" :key="category.id">
+        <table class="table table-striped" >
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -13,7 +13,7 @@
                     <th>Estado</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody v-for="category in categories.data" :key="category.id">
                 <tr >
                     <td>{{ category.nombre }}</td>
                     <td>{{ category.descripcion }}</td>
