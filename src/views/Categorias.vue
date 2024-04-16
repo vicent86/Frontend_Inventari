@@ -5,7 +5,7 @@
     <div class="container">
         <button type="button" class="btn btn-outline-info" @click="this.editarCategoria()">Añadir Categoria</button>
         <br>
-        <table class="table table-striped" >
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>Nombre</th>
