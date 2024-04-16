@@ -1,10 +1,22 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/categories">Categories</router-link>
   </nav>
-  <router-view/>
+  <router-view :base_url="base_url"/>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      base_url: "http://localhost:8000/api/categorias",
+    };
+  },
+  methods: {
+  },
+};
+</script>
 
 <style>
 #app {
