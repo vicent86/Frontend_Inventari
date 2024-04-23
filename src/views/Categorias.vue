@@ -6,7 +6,7 @@
     <button
       type="button"
       class="btn btn-outline-info"
-      @click="this.crearCategoria(id)"
+      @click="this.nuevaCategoria(categoriaIndex)"
     >
       Añadir Categoria
     </button>
@@ -24,7 +24,7 @@
           <td>{{ category.nombre }}</td>
           <td>{{ category.descripcion }}</td>
           <td>
-            <span class="badge bg-success" v-if="category.estado === 1">Activo</span>
+            <span class="badge bg-success" v-if="category.estado">Activo</span>
             <span class="badge bg-danger" v-else>Inactivo</span>
           </td>
           <td>
@@ -36,7 +36,7 @@
             </button>
             <button
               class="btn btn-outline-warning"
-              @click="this.editarCategoria(category.id.crearCategoria)"
+              @click="this.editarCategoria(category.id)"
             >
               Editar
             </button>

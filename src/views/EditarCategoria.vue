@@ -18,8 +18,7 @@
 
             <div class="form-group">
                 <label for="estado">Estado:</label>
-                <input v-model="nuevaCategoria.estado" type="checkbox" class="form-check-input" id="estado">
-
+                <input v-model="nuevaCategoria.estado" type="checkbox" class="form-check-input" id="estado"  :checked="nuevaCategoria.estado">
             </div>
             <button type="submit" class="btn btn-primary" @click="this.putCategoria()">Añadir Categoria</button>
             <div class="alert alert-success" role="alert" v-if="categoriaCreadaCorrecta">Categoria Editada Correctamente</div>
@@ -35,7 +34,7 @@ export default {
       nuevaCategoria: {
         nombre: '',
         descripcion: '',
-        estado: 'activo'
+        estado: 'Activo'
       },
       categoriaCreadaCorrecta: false
     };
@@ -53,7 +52,7 @@ export default {
       this.nuevaCategoria = {
         nombre: "",
         descripcion: "",
-        estado: "activo"
+        estado: 'Activo'
       };
     },
 
