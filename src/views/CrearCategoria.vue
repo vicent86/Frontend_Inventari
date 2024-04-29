@@ -1,7 +1,7 @@
 <template>
     <h1>Crear Categoria</h1>
     <div class="container mt-3">
-        <h2>Nova Categoria</h2>
+        <h2>nueva Categoria</h2>
         <form @submit.prevent="crearCategoria" >
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
@@ -33,9 +33,10 @@ export default {
   data() {
     return {
       nuevaCategoria: {
+        id: 999999,
         nombre: '',
         descripcion: '',
-        estado: 'Activo'
+        estado: false,
       },
       categoriaCreadaCorrecta: false
     };
@@ -45,26 +46,31 @@ export default {
     base_url: String,
   },
   methods: {
-    crearCategoria() {
+    async crearCategoria() {
       console.log("Categoria añadida:", this.nuevaCategoria);
-      // Lógica para crear la categoría 
+      // Lógica para crear la categoría
+      this.nuevaCategoria.id = Math.floor(Math.random() * 1000000);
       this.postCategoria(this.nuevaCategoria);
       this.categoriaCreadaCorrecta = true;
 
       this.nuevaCategoria = {
+        id: "",
         nombre: "",
         descripcion: "",
-        estado: 'Activo'
+        estado: false,
       };
+      
     },
     async postCategoria(categoria) {
       try {
-        const response = await fetch('http://localhost:8080/categories', {
+        const response = await fetch(`${this.base_url}`, {
           method: 'POST',
           body: JSON.stringify(categoria),
-          headers: { "Content-Type": "application/json; charset=UTF-8" },
+          headers: { 
+            "Content-Type": "application/json; charset=UTF-8" 
+          },
         });
-
+       
         const categoriaCreada = await response.json();
         console.log(categoriaCreada);
       } catch (error) {

@@ -61,11 +61,18 @@ export  default {
     data() {
         return {
             msg: "Lista de Categorias",
-            categories: [] ,
+            id: 1,
+            categoria: {
+              id: 1,
+              nombre: 'Informatica y Accesorios',
+              descripcion: 'Accesorios y equipos informaticos en general',
+              estado: 'Activo',
+            },
+            categories: { data: [] },
         };
     },
     props: {
-        base_url: String,
+      base_url: String,
     },
     methods:{
         async getCategories() {
@@ -88,108 +95,27 @@ export  default {
             } catch (error) {
                 console.error(error);
             }
-
-            // app.delete('/categories/:id', (req, res) => {
-            //     const categoriaId = parseInt(req.params.id);
-            //     categories = categories.filter(c => c.id !== categoriaId);
-            //     res.json({ msg:"Se ha eliminado la categoría correctamente" });
-            // });
         },
         async nuevaCategoria(categoriaIndex){
 
-            try {
-                const response = await fetch(`${this.base_url}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type':  'application/json'
-                    },
-                    body: JSON.stringify(categoriaIndex)
-                });
-
-                if (response.status === 201) {
-                    const nuevaCategoria = await response.json();
-                    console.log('Nueva categoría creada:', nuevaCategoria);
-                } else {
-                    console.error('Error al crear la categoría');
-                }
-
-            } catch (error) {
-                console.error(error);
-            }
-            //this.$router.push('NuevaCategoria')
-            // app.post( '/categories', ( req,res )=>{
-            //     const nuevaCategoria = req.body
-            //     categories.push(nuevaCategoria);
-            //     res.status(201).json(nuevaCategoria);
-            // });
+          this.$router.push({ name:'nuevacategoria', params: { id : categoriaIndex }});
+           
         },
         async VistaCategoria(id) {
-
-            try {
-                const response = await fetch(`${this.base_url}/${id}`, {
-                    method: 'GET',
-                });
-                if (response.status === 404) {
-                    console.error('Categoría no encontrada');
-                } else {
-                    const categoria = await response.json();
-                    console.log('Información de la categoría:', categoria);
-            
-                }
-
-            } catch (error) {
-                console.error(error);
-            }
-            // //this.$router.push({ name:'VistaCategoria', params: { id : id }});
-            // app.get('/categories/:id', (req, res)=>{
-            //     const categoriaId = parseInt(req.params.id);
-            //     const categoria = categories.find(c => c.id === categoriaId );
-            //         if(!categoria){
-            //             res.status(404).json({msg:'La Categoría no encontrada'});
-            //         } else {
-            //             res.json(categoria);
-            //         }
-            // });
+          this.$router.push({ name:'categoria', params: { id : id }});
         },
-        async editarCategoria(id, crearCategoria) {
-            //this.$router.push({name:'EditarCategoria',params: { id : id }});
-            // app.put('/categories/:id', (req,res)=>{
-            //     const categoriaId = parseInt(req.params.id);
-            //     const categoriaIndex = categories.findIndex(c => c.id === categoriaId);
-
-            //     if (categoriaIndex === -1 ) {
-            //         res.status(404).json({ msg: 'Categoria No Encontrada' })
-            //     } else {
-            //         categories[categoriaIndex] = req.body;
-            //         res.json(categories[categoriaIndex]);
-            //     }
-            // });
-
-            try {
-                const response = await fetch(`${this.base_url}/${id}`, {
-                    method: "PUT",
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                    body: JSON.stringify(crearCategoria)
-                });
-
-                if (response.status === 404) {
-                    const errorData = await response.json();
-                    console.error(errorData.msg);
-                } else {
-                    const updatedCategoria = await response.json();
-                    console.log('Categoría actualizada:', updatedCategoria);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        async editarCategoria(id) {
+          this.$router.push({name:'editarcategoria',params: { id : id }});
+        },
+            
+       
     },
 
     mounted() {
-        this.getCategories();
-        //this.borrarCategoria();
+      this.id = this.$route.params.id;
+      //console.log("ID de la categoria a mostrar es " + this.id);
+      this.getCategories();
+        
     }
 
 }

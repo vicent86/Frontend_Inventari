@@ -2,7 +2,7 @@
     <h1>Editar Categoria</h1>
     <div class="container mt-3">
         <h2>Editar Element</h2>
-        <form @submit.prevent="crearCategoria" >
+        <form @submit.prevent="editarCategoria" >
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input v-model="nuevaCategoria.nombre" type="text" class="form-control" id="nombre"
@@ -20,7 +20,7 @@
                 <label for="estado">Estado:</label>
                 <input v-model="nuevaCategoria.estado" type="checkbox" class="form-check-input" id="estado"  :checked="nuevaCategoria.estado">
             </div>
-            <button type="submit" class="btn btn-primary" @click="this.putCategoria()">Añadir Categoria</button>
+            <button type="submit" class="btn btn-primary" @click="this.putCategoria()">Actualizar Categoria</button>
             <div class="alert alert-success" role="alert" v-if="categoriaCreadaCorrecta">Categoria Editada Correctamente</div>
         </form>
     </div>
@@ -32,9 +32,10 @@ export default {
   data() {
     return {
       nuevaCategoria: {
+        id: 999999,
         nombre: '',
         descripcion: '',
-        estado: 'Activo'
+        estado: false
       },
       categoriaCreadaCorrecta: false
     };
@@ -44,24 +45,29 @@ export default {
     base_url: String,
   },
   methods: {
-    editarCategoria() {
+    async editarCategoria() {
       console.log("Categoria añadida:", this.nuevaCategoria);
-      this.postCategoria(this.nuevaCategoria);
+      this.nuevaCategoria.id = this.id;
+      await this.putCategoria(this.nuevaCategoria);
       this.categoriaCreadaCorrecta = true;
 
-      this.nuevaCategoria = {
-        nombre: "",
-        descripcion: "",
-        estado: 'Activo'
-      };
+      this.nuevaCategoria.estado = !this.nuevaCategoria.estado;
+
+      // this.nuevaCategoria = {
+      //   nombre: "",
+      //   descripcion: "",
+      //   estado: false
+      // };
     },
 
-    async putCategoria(category) {
+    async putCategoria(categoria) {
       try {
-        const response = await fetch(`http://localhost:8080/categories/${category.id}`, {
+        const response = await fetch(`${this.base_url}/${this.id}`, {
           method: 'PUT',
-          body: JSON.stringify(category),
-          headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+          body: JSON.stringify(categoria),
+          headers: { 
+            'Content-Type': 'application/json; charset=UTF-8' 
+          },
         });
 
         const categoriaCreada = await response.json();
@@ -73,7 +79,7 @@ export default {
 
     async getCategoria() {
       try {
-        const response = await fetch(`http://localhost:8080/categories/${this.id}`);
+        const response = await fetch(`${this.base_url}/${this.id}`);
         this.nuevaCategoria = await response.json();
       } catch (error) {
         console.log(error);

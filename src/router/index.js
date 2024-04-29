@@ -15,30 +15,30 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Categorias.vue')
   },
-  // {
-  //   path: '/categories/:id',
-  //   name: 'categoria',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/CategoriesView.vue'),
-  // },
-  // {
-  //   path: '/categories',
-  //   name: 'NuevaCategoria',
-  //    // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/CrearCategoria.vue'),
-  // },
-  // {
-  //   path: '/categories/:id',
-  //   name: 'EditarCategoria',
-  //    // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/EditarCategoria.vue'),
-  // }
+  {
+    path: '/categoria/:id',
+    name: 'categoria',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/CategoriesView.vue'),
+  },
+  {
+    path: '/nuevacategoria',
+    name: 'nuevacategoria',
+     // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/CrearCategoria.vue'),
+  },
+  {
+    path: '/editarcategoria/:id',
+    name: 'editarcategoria',
+     // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/EditarCategoria.vue'),
+  }
 ]
 
 const router = createRouter({
