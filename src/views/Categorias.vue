@@ -105,10 +105,9 @@ export  default {
           this.$router.push({ name:'categoria', params: { id : id }});
         },
         async editarCategoria(id) {
-          this.$router.push({name:'editarcategoria',params: { id : id }});
+          this.$router.push({name:'editarcategoria', params: { id : id }});
         },
-            
-       
+  
     },
 
     mounted() {

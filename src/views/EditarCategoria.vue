@@ -2,7 +2,7 @@
     <h1>Editar Categoria</h1>
     <div class="container mt-3">
         <h2>Editar Element</h2>
-        <form @submit.prevent="editarCategoria" >
+        <form @submit.prevent="editarCategoria">
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
                 <input v-model="nuevaCategoria.nombre" type="text" class="form-control" id="nombre"
@@ -18,8 +18,13 @@
 
             <div class="form-group">
                 <label for="estado">Estado:</label>
-                <input v-model="nuevaCategoria.estado" type="checkbox" class="form-check-input" id="estado"  :checked="nuevaCategoria.estado">
+                <input v-model="nuevaCategoria.estado" type="checkbox" class="form-check-input" id="estado" >
+
+                <span class="badge" :class="{ 'bg-success': nuevaCategoria.estado, 'bg-danger': !nuevaCategoria.estado }">
+                  {{ nuevaCategoria.estado ? 'Activo' : 'Inactivo' }}
+                </span>
             </div>
+            
             <button type="submit" class="btn btn-primary" @click="this.putCategoria()">Actualizar Categoria</button>
             <div class="alert alert-success" role="alert" v-if="categoriaCreadaCorrecta">Categoria Editada Correctamente</div>
         </form>
@@ -32,10 +37,10 @@ export default {
   data() {
     return {
       nuevaCategoria: {
-        id: 999999,
+        id: '',
         nombre: '',
         descripcion: '',
-        estado: false
+        estado: false,
       },
       categoriaCreadaCorrecta: false
     };
@@ -46,12 +51,10 @@ export default {
   },
   methods: {
     async editarCategoria() {
-      console.log("Categoria añadida:", this.nuevaCategoria);
+      console.log("Categoria editada:", this.nuevaCategoria);
       this.nuevaCategoria.id = this.id;
       await this.putCategoria(this.nuevaCategoria);
       this.categoriaCreadaCorrecta = true;
-
-      this.nuevaCategoria.estado = !this.nuevaCategoria.estado;
 
       // this.nuevaCategoria = {
       //   nombre: "",
@@ -81,14 +84,16 @@ export default {
       try {
         const response = await fetch(`${this.base_url}/${this.id}`);
         this.nuevaCategoria = await response.json();
+        
       } catch (error) {
         console.log(error);
       }
+      
     }
   },
   mounted() {
     this.id = this.$route.params.id;
-    console.log(this.id);
+    console.log("ID de la categoria", this.id);
     this.getCategoria();
   }
 };
