@@ -63,7 +63,7 @@ export default {
     },
     async postCategoria(categoria) {
       try {
-        const response = await fetch(`${this.base_url}`, {
+        const response = await fetch(`${this.base_url}/categorias`, {
           method: 'POST',
           body: JSON.stringify(categoria),
           headers: { 

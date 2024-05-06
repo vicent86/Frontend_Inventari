@@ -10,7 +10,7 @@
 export default {
   data() {
     return {
-      base_url: "http://localhost:8000/api/categorias",
+      base_url: "http://localhost:8000/api",
     };
   },
   methods: {

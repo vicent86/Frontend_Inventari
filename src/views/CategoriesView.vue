@@ -8,11 +8,11 @@
         <th>Estado</th>
       </tr>
     </thead>
-    <tbody v-for="category in categories.data" :key="category.id">
+    <tbody>
       <tr>
-        <td>{{ category.nombre }}</td>
-        <td>{{ category.descripcion }}</td>
-        <td>{{ category.estado }}</td>
+        <td>{{ categoria.data.nombre }}</td>
+        <td>{{ categoria.data.descripcion }}</td>
+        <td>{{ categoria.data.estado }}</td>
       </tr>
     </tbody>
   </table>
@@ -24,8 +24,15 @@ export default {
   name: 'CategoriesView',
   data() {
     return {
-      msg: "Lista de Categorias",
-      categories: [],
+      msg: "Categoria",
+      categoria: {
+        data: {
+          id: "",
+          nombre: "",
+          descripcion: "",
+          estado: "",
+        }
+      },
     };
   },
   props:{
@@ -36,16 +43,16 @@ export default {
     // Fem una crida a una API o realitzem altres operacions aquí
     this.id = this.$route.params.id;
     console.log(this.id);
-    this.getCategories();
+    this.getCategories(this.id);
   },
   methods: {
-    async getCategories() {
+    async getCategories(id) {
       try {
         let url= this.base_url;
         console.log(url);
-        const response = await fetch(url);
-        this.categories = await response.json();
-        console.log("Les categories són: " + this.categories);
+        const response = await fetch(url + '/categorias/' + id);
+        this.categoria = await response.json();
+        console.log("Les categories són: " + this.categoria);
       } catch (error) {
         console.error(error);
       }

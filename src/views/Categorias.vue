@@ -24,7 +24,7 @@
           <td>{{ category.nombre }}</td>
           <td>{{ category.descripcion }}</td>
           <td>
-            <span class="badge bg-success" v-if="category.estado">Activo</span>
+            <span class="badge bg-success" v-if="category.estado === 'Activo'">Activo</span>
             <span class="badge bg-danger" v-else>Inactivo</span>
           </td>
           <td>
@@ -77,7 +77,7 @@ export  default {
     methods:{
         async getCategories() {
             try {
-                let url = this.base_url;
+                let url = this.base_url + '/categorias';
                 console.log(url);
                 const response = await fetch(url);
                 this.categories = await response.json();
@@ -88,10 +88,16 @@ export  default {
         },
         async borrarCategoria(id){
             try {
-                await fetch(`${this.base_url}/${id}`, {
+              const confirmacion = confirm("¿Estás seguro de que deseas borrar esta categoría?");
+              if(confirmacion) {
+                await fetch(`${this.base_url}/categorias/${id}`, {
                     method: 'DELETE',
                 });
+              
                 await this.getCategories();
+                alert("Categoria Borrada Correctamente");
+              }
+
             } catch (error) {
                 console.error(error);
             }
@@ -107,7 +113,13 @@ export  default {
         async editarCategoria(id) {
           this.$router.push({name:'editarcategoria', params: { id : id }});
         },
-  
+
+        async actualizarEstadoCategoria(id, estado) {
+          const index = this.categories.data.findIndex(c => c.id === id);
+          if (index !== -1) {
+            this.categories.data[index].estado = estado;
+          }
+        } ,
     },
 
     mounted() {
