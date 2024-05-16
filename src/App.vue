@@ -1,7 +1,9 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/categories">Categories</router-link>
+    <router-link to="/categories">Categories</router-link> |
+    <router-link to="/proveedores">Proveedores</router-link> |
+    <router-link to="/productos">Productos</router-link>
   </nav>
   <router-view :base_url="base_url"/>
 </template>
