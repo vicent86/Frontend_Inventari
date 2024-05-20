@@ -46,14 +46,14 @@
       </div>
 
       <div class="form-group">
-        <label for="categoria_id">Categoría ID:</label>
-        <input
-          v-model="nuevoProducto.categoria_id"
-          type="text"
-          class="form-control"
-          id="categoria_id"
-        />
+        <label for="categoria_id">Categoría:</label>
+        <select v-model="nuevoProducto.categoria_id" class="form-control" id="categoria_id">
+          <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
+            {{ categoria.nombre }}
+          </option>
+        </select>
       </div>
+
 
       <div class="form-group">
         <label for="estado">Estado:</label>
@@ -65,15 +65,14 @@
         />
       </div>
       <div class="form-group">
-        <label for="id_proveedor">ID Proveedor:</label>
-        <input
-          v-model="nuevoProducto.id_proveedor"
-          type="text"
-          class="form-control"
-          id="id_proveedor"
-        />
+        <label for="id_proveedor">Proveedor:</label>
+        <select v-model="nuevoProducto.id_proveedor" class="form-control" id="id_proveedor">
+          <option v-for="proveedor in proveedores" :key="proveedor.id" :value="proveedor.id">
+            {{ proveedor.nombre }}
+          </option>
+        </select>
       </div>
-
+      
       <div class="form-group">
         <label for="iva">IVA:</label>
         <input
@@ -113,6 +112,8 @@ export default {
       },
       productoCreadoCorrectamente: false,
       selectedFile: null,
+      categorias: [],
+      proveedores: [],
     };
   },
 
@@ -120,6 +121,32 @@ export default {
     base_url: String,
   },
   methods: {
+    async fetchCategorias() {
+      try {
+        const response = await fetch(`${this.base_url}/categorias`);
+        if (!response.ok) {
+          throw new Error(`Error al cargar las categorías: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Categorías cargadas:", data);
+        this.categorias = data.data; 
+      } catch (error) {
+        console.error("Error al cargar las categorías:", error);
+      }
+    },
+    async fetchProveedores() {
+      try {
+        const response = await fetch(`${this.base_url}/proveedores`);
+        if (!response.ok) {
+          throw new Error(`Error al cargar los proveedores: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Proveedores cargados:", data);
+        this.proveedores = data.data || data; 
+      } catch (error) {
+        console.error("Error al cargar los proveedores:", error);
+      }
+    },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];
     },
@@ -172,6 +199,11 @@ export default {
       };
       this.selectedFile = null;
     },
+  },
+  async mounted() {
+    console.log("Component mounted, fetching data...");
+    await this.fetchCategorias();
+    await this.fetchProveedores();
   },
 };
 </script>
