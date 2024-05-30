@@ -104,7 +104,40 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/EditarProducto.vue'),
-  }
+  },
+
+  {
+    path: '/clientes',
+    name: 'clientes',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Clientes.vue')
+  },
+  {
+    path: '/cliente/:id',
+    name: 'cliente',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/ClientesView.vue'),
+  },
+  {
+    path: '/nuevocliente',
+    name: 'nuevocliente',
+     // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/CrearCliente.vue'),
+  },
+  {
+    path: '/editarcliente/:id',
+    name: 'editarcliente',
+     // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/EditarCliente.vue'),
+  },
 ]
 
 const router = createRouter({

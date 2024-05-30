@@ -3,7 +3,8 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/categories">Categories</router-link> |
     <router-link to="/proveedores">Proveedores</router-link> |
-    <router-link to="/productos">Productos</router-link>
+    <router-link to="/productos">Productos</router-link> |
+    <router-link to="/clientes">Clientes</router-link>
   </nav>
   <router-view :base_url="base_url"/>
 </template>
@@ -30,15 +31,17 @@ export default {
 }
 
 nav {
-  padding: 30px;
+  background-color: #42b983;
+  padding: 10px;
 }
 
 nav a {
+  color: white;
+  text-decoration: none;
   font-weight: bold;
-  color: #2c3e50;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  text-decoration: underline;
 }
 </style>

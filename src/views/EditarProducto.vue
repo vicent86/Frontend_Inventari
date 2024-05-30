@@ -180,7 +180,7 @@ export default {
     },
     async editarProducto() {
       try {
-        const formData = new FormData();
+        let formData = new FormData();
         formData.append("nombre", this.nuevoProducto.nombre);
         if (this.selectedFile) {
           formData.append("imagen", this.selectedFile);
@@ -197,7 +197,7 @@ export default {
           `${this.base_url}/productos/${this.nuevoProducto.id}`,
           {
             method: "PUT",
-            body: formData,
+            body: new URLSearchParams(formData),
           }
         );
 
